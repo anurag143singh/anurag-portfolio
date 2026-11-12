@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {"id":"techhet-circuit-2nd","type":"Achievement","date":"2026","title":"2nd place · Instant Circuit Making","summary":"TECHhet 2K26 at Hooghly Engineering and Technology College.","details":"LinkedIn describes a second-place finish in the instant circuit-making event. Add the exact event date and certificate image when available.","image":"assets/techhet-certificate.jpg","link":""},
+    {"id":"ai-deployment-internship","type":"Learning","date":"2026","title":"AI Deployment & Automation","summary":"Completed an EduSkills virtual internship supported by AICTE and the Ministry of Education.","details":"Topics described in the completion post include FastAPI, retrieval, LangChain/LangGraph, Docker, Kubernetes and monitoring. Confirm exact dates and personal work before expanding this entry.","image":"assets/ai-internship-certificate.jpg","link":""},
+    {"id":"sih-attendance-system","type":"Project","date":"2025","title":"Smart Student Attendance System","summary":"Team project presented at the SIH-2025 internal hackathon.","details":"LinkedIn describes a four-person team and an internal hackathon round at HETC. Add the role, result, repository and demo when confirmed.","image":"assets/sih-certificate.jpg","link":""}
+  ]
+}
+
