@@ -156,26 +156,69 @@ if ('IntersectionObserver' in window) {
 
 if (!reduceMotion && matchMedia('(hover: hover) and (pointer: fine)').matches) {
   const glow = document.querySelector('.cursor-glow');
-  addEventListener('pointermove', event => { if (glow) { glow.style.left = `${event.clientX}px`; glow.style.top = `${event.clientY}px`; } });
-  document.querySelectorAll('.project-card').forEach(card => {
+  addEventListener('pointermove', event => {
+    if (glow) {
+      glow.style.left = `${event.clientX}px`;
+      glow.style.top = `${event.clientY}px`;
+    }
+  }, { passive: true });
+
+  // 3D Tilt & Specular Glare Engine for interactive cards
+  const interactiveCards = document.querySelectorAll(
+    '.project-card, .skill-card, .media-card, .certificate-card, .contact-card, .lens-card'
+  );
+
+  interactiveCards.forEach(card => {
     card.addEventListener('pointermove', event => {
       const rect = card.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width - .5;
-      const y = (event.clientY - rect.top) / rect.height - .5;
-      card.style.setProperty('--tilt-x', `${-y * 4}deg`);
-      card.style.setProperty('--tilt-y', `${x * 4}deg`);
+      const x = (event.clientX - rect.left) / rect.width;
+      const y = (event.clientY - rect.top) / rect.height;
+      const tiltX = (0.5 - y) * 12;
+      const tiltY = (x - 0.5) * 12;
+
+      card.style.setProperty('--tilt-x', `${tiltX.toFixed(2)}deg`);
+      card.style.setProperty('--tilt-y', `${tiltY.toFixed(2)}deg`);
+      card.style.setProperty('--glare-x', `${(x * 100).toFixed(1)}%`);
+      card.style.setProperty('--glare-y', `${(y * 100).toFixed(1)}%`);
+      card.style.setProperty('--glare-opacity', '1');
+    }, { passive: true });
+
+    card.addEventListener('pointerleave', () => {
+      card.style.setProperty('--tilt-x', '0deg');
+      card.style.setProperty('--tilt-y', '0deg');
+      card.style.setProperty('--glare-opacity', '0');
     });
-    card.addEventListener('pointerleave', () => { card.style.setProperty('--tilt-x', '0deg'); card.style.setProperty('--tilt-y', '0deg'); });
   });
+
+  // Hero Portrait 3D Stage Mouse Parallax
+  const portraitStage = document.querySelector('#hero-portrait-stage');
+  const heroVisual = document.querySelector('.hero-visual');
+  if (heroVisual && portraitStage) {
+    heroVisual.addEventListener('pointermove', event => {
+      const rect = heroVisual.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      portraitStage.style.transform = `perspective(1000px) rotateX(${(-y * 14).toFixed(2)}deg) rotateY(${(x * 14).toFixed(2)}deg) translateZ(20px)`;
+    }, { passive: true });
+
+    heroVisual.addEventListener('pointerleave', () => {
+      portraitStage.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
+    });
+  }
+
+  // Magnetic buttons with 3D lift
   document.querySelectorAll('.magnetic').forEach(button => {
     button.addEventListener('pointermove', event => {
       const rect = button.getBoundingClientRect();
-      const x = Math.max(-7, Math.min(7, (event.clientX - rect.left - rect.width / 2) * .12));
-      const y = Math.max(-7, Math.min(7, (event.clientY - rect.top - rect.height / 2) * .12));
+      const x = Math.max(-8, Math.min(8, (event.clientX - rect.left - rect.width / 2) * 0.15));
+      const y = Math.max(-8, Math.min(8, (event.clientY - rect.top - rect.height / 2) * 0.15));
       button.style.setProperty('--mag-x', `${x}px`);
       button.style.setProperty('--mag-y', `${y}px`);
+    }, { passive: true });
+    button.addEventListener('pointerleave', () => {
+      button.style.setProperty('--mag-x', '0px');
+      button.style.setProperty('--mag-y', '0px');
     });
-    button.addEventListener('pointerleave', () => { button.style.setProperty('--mag-x', '0px'); button.style.setProperty('--mag-y', '0px'); });
   });
 }
 
@@ -279,4 +322,3 @@ document.querySelector('#import-updates')?.addEventListener('change', async even
   catch { updateStatus.textContent = 'That file is not a valid achievements.json update file.'; }
   event.target.value = '';
 });
-

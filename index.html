@@ -13,7 +13,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=profile-photo-fixed"><script src="script.js" defer></script><script src="updates.js" defer></script>
+  <link rel="stylesheet" href="style.css?v=3d-upgrade"><script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script><script src="three-scene.js" defer></script><script src="script.js" defer></script><script src="updates.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -45,8 +45,20 @@
           <div class="hero-slide-controls" role="group" aria-label="Slideshow controls"><button type="button" class="slide-prev" aria-label="Previous slide">←</button><div class="slide-dots"><button type="button" aria-label="Show slide 1" aria-current="true"></button><button type="button" aria-label="Show slide 2"></button><button type="button" aria-label="Show slide 3"></button></div><button type="button" class="slide-next" aria-label="Next slide">→</button><button type="button" class="slide-pause" aria-label="Pause slideshow">Ⅱ</button></div>
           <span class="art-credit">SELECTED WORK · ANURAG SINGH</span>
         </div>
-        <div class="portrait-panel image-frame"><img src="assets/anurag-profile.jpeg?v=profile-photo-fixed" alt="Professional portrait of Anurag Singh" width="1254" height="1254" fetchpriority="high" decoding="async"><span class="portrait-door portrait-door-left" aria-hidden="true"></span><span class="portrait-door portrait-door-right" aria-hidden="true"></span><span class="portrait-ring"></span><span class="portrait-caption" aria-hidden="true">ANURAG SINGH <i>·</i> ECE</span></div>
-        <div class="hero-signal glass-card"><span class="pulse-orb"></span><div><small>PROFILE SIGNAL</small><b>Embedded · IoT · Software</b></div></div><div class="hero-orbit orbit-a"></div><div class="hero-orbit orbit-b"></div>
+        <div class="portrait-panel image-frame" id="hero-portrait-stage">
+          <div class="portrait-gimbal gimbal-1" aria-hidden="true"></div>
+          <div class="portrait-gimbal gimbal-2" aria-hidden="true"></div>
+          <div class="portrait-depth-halo" aria-hidden="true"></div>
+          <img src="assets/anurag-profile.jpeg?v=profile-photo-fixed" alt="Professional portrait of Anurag Singh" width="1254" height="1254" fetchpriority="high" decoding="async">
+          <span class="portrait-door portrait-door-left" aria-hidden="true"></span>
+          <span class="portrait-door portrait-door-right" aria-hidden="true"></span>
+          <span class="portrait-ring"></span>
+          <span class="portrait-caption" aria-hidden="true">ANURAG SINGH <i>·</i> ECE</span>
+        </div>
+        <div class="hero-signal glass-card"><span class="pulse-orb"></span><div><small>PROFILE SIGNAL</small><b>Embedded · IoT · Software</b></div></div>
+        <div class="hero-badge badge-hardware glass-card" aria-hidden="true"><span>⌁</span><b>Hardware &amp; IoT</b></div>
+        <div class="hero-badge badge-software glass-card" aria-hidden="true"><span>⌘</span><b>Software &amp; IT</b></div>
+        <div class="hero-orbit orbit-a"></div><div class="hero-orbit orbit-b"></div>
       </div>
       <div class="hero-foot"><span>SCROLL TO EXPLORE</span><span class="scroll-line"></span><span>01 / 08</span></div>
     </section>
@@ -95,4 +107,3 @@
   </main>
 </body>
 </html>
-

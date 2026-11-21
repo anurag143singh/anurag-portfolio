@@ -61,5 +61,324 @@ body[data-theme=light]{--bg:#f1f5f0;--bg2:#e6eee9;--panel:#fcfdf9;--ink:#142629;
 @media(max-width:720px){.mobile-portrait{display:grid;place-items:center;width:142px;height:142px;margin:0 auto 20px;overflow:hidden;border:4px solid var(--bg);border-radius:50%;box-shadow:0 10px 36px #0008,0 0 0 1px var(--mint);animation:visual-arrive .75s var(--ease) .15s both}.mobile-portrait img{width:100%;height:100%;object-fit:cover;object-position:center 30%}.hero{padding-top:25px}.hero-visual{margin-top:0}.portrait-panel{display:none}}
 @media(prefers-reduced-motion:reduce){.mobile-portrait{animation:none;opacity:1;transform:none}}
 
-
 @media(max-width:720px){.hero-copy{grid-row:1}.hero-visual{grid-row:2}}
+
+/* ==========================================================================
+   PREMIUM 3D ANIMATED EXPERIENCE EXTENSION
+   Three.js Integration, 3D Holographic Portrait, Specular Glare & CSS 3D
+   ========================================================================== */
+
+/* WebGL Background Canvas Layer */
+.webgl-canvas-container {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.95;
+  transition: opacity 0.6s ease;
+}
+.webgl-canvas-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* Glassmorphism Header with 3D Depth */
+.site-header {
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  box-shadow: 0 10px 30px #00000022;
+  transition: transform 0.3s var(--ease), background 0.3s var(--ease);
+}
+.site-header:hover {
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+}
+.site-nav a {
+  position: relative;
+  transition: color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.site-nav a:hover {
+  transform: translateY(-2px);
+}
+.site-nav a[aria-current=location]::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--teal), var(--mint));
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--mint);
+}
+
+/* Hero 3D Stage & Holographic Portrait */
+.hero-visual {
+  perspective: 1400px;
+  transform-style: preserve-3d;
+}
+.hero-art {
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease);
+}
+.hero-art:hover {
+  box-shadow: 0 35px 95px #000a, 0 0 30px #2abaaa25;
+}
+
+.portrait-panel {
+  transform-style: preserve-3d;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+  box-shadow: 0 25px 65px #0009, 0 0 0 1px color-mix(in srgb, var(--mint) 38%, transparent);
+}
+.portrait-panel:hover {
+  box-shadow: 0 30px 80px #000c, 0 0 45px #94e4d344, 0 0 0 2px var(--mint);
+}
+
+/* Concentric 3D Gimbal Orbit Rings */
+.portrait-gimbal {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  border: 1px dashed color-mix(in srgb, var(--mint) 45%, transparent);
+  transition: border-color 0.4s;
+}
+.portrait-gimbal.gimbal-1 {
+  inset: -16px;
+  border-width: 1.5px;
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--teal) 50%, transparent);
+  border-top-color: var(--mint);
+  border-bottom-color: var(--amber);
+  animation: gimbal-spin-1 20s linear infinite;
+}
+.portrait-gimbal.gimbal-2 {
+  inset: -28px;
+  border-width: 1px;
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--line) 80%, transparent);
+  animation: gimbal-spin-2 30s linear infinite reverse;
+}
+@keyframes gimbal-spin-1 {
+  0% { transform: rotate3d(1, 1, 0, 0deg); }
+  100% { transform: rotate3d(1, 1, 0, 360deg); }
+}
+@keyframes gimbal-spin-2 {
+  0% { transform: rotate3d(0, 1, 1, 0deg); }
+  100% { transform: rotate3d(0, 1, 1, 360deg); }
+}
+
+/* Luminous Ambient Backlight */
+.portrait-depth-halo {
+  position: absolute;
+  inset: -15%;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--teal) 35%, transparent) 0%, transparent 70%);
+  filter: blur(18px);
+  z-index: -1;
+  pointer-events: none;
+  animation: pulse-halo 4s ease-in-out infinite alternate;
+}
+@keyframes pulse-halo {
+  0% { opacity: 0.5; transform: scale(0.95); }
+  100% { opacity: 0.85; transform: scale(1.05); }
+}
+
+/* Floating 3D Holographic Badges */
+.hero-badge {
+  position: absolute;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  color: var(--ink);
+  font: 10px var(--mono);
+  letter-spacing: 0.06em;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  box-shadow: 0 14px 35px #0006, inset 0 0 0 1px color-mix(in srgb, var(--mint) 35%, transparent);
+  animation: badge-float 6s ease-in-out infinite alternate;
+}
+.hero-badge span {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--mint) 22%, transparent);
+  color: var(--mint);
+  font-size: 12px;
+}
+.hero-badge.badge-hardware {
+  right: -24px;
+  top: 18%;
+  animation-delay: -1s;
+}
+.hero-badge.badge-software {
+  right: 38%;
+  bottom: -22px;
+  animation-delay: -3.5s;
+}
+@keyframes badge-float {
+  0% { transform: translate3d(0, 0, 40px); }
+  100% { transform: translate3d(0, -12px, 55px); }
+}
+
+/* Universal 3D Card Architecture (Projects, Skills, Media, Certificates, Journey) */
+.project-card,
+.skill-card,
+.media-card,
+.certificate-card,
+.timeline-card,
+.contact-card,
+.lens-card,
+.about-media,
+.journey-aside {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+}
+
+/* Specular Glare Layer for 3D Cards */
+.project-card::before,
+.skill-card::before,
+.media-card::before,
+.certificate-card::before,
+.timeline-card::before,
+.contact-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle 380px at var(--glare-x, 50%) var(--glare-y, 50%), rgba(148, 228, 211, 0.16), transparent 75%);
+  opacity: var(--glare-opacity, 0);
+  pointer-events: none;
+  z-index: 4;
+  transition: opacity 0.3s ease;
+}
+
+/* 3D Depth Elevation for Internal Card Elements */
+@media(hover: hover) and (pointer: fine) {
+  .project-card {
+    transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(var(--lift-z, 0px));
+    transition: transform 0.22s var(--ease), border-color 0.25s, box-shadow 0.25s;
+  }
+  .project-card:hover {
+    --lift-z: 14px;
+    border-color: color-mix(in srgb, var(--mint) 65%, transparent);
+    box-shadow: 0 30px 75px #0008, 0 0 25px color-mix(in srgb, var(--mint) 22%, transparent);
+  }
+  .project-card:hover .project-photo {
+    transform: translateZ(24px);
+    transition: transform 0.3s var(--ease);
+  }
+  .project-card:hover .project-body h3 {
+    transform: translateZ(20px);
+    transition: transform 0.3s var(--ease);
+  }
+  .project-card:hover .project-meta {
+    transform: translateZ(16px);
+    transition: transform 0.3s var(--ease);
+  }
+  .project-card:hover .project-link {
+    transform: translateZ(22px);
+    transition: transform 0.3s var(--ease);
+  }
+
+  /* Skills Bento 3D Tilt */
+  .skill-card {
+    transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(var(--lift-z, 0px));
+    transition: transform 0.22s var(--ease), border-color 0.25s, box-shadow 0.25s;
+  }
+  .skill-card:hover {
+    --lift-z: 10px;
+    border-color: var(--mint);
+    box-shadow: 0 20px 50px #0006, 0 0 20px #2abaaa22;
+  }
+  .skill-card:hover .skill-icon {
+    transform: translateZ(20px) scale(1.08);
+    transition: transform 0.25s var(--ease);
+  }
+
+  /* Media & Certificate 3D Depth */
+  .media-card, .certificate-card {
+    transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(var(--lift-z, 0px));
+    transition: transform 0.25s var(--ease), border-color 0.25s, box-shadow 0.25s;
+  }
+  .media-card:hover, .certificate-card:hover {
+    --lift-z: 12px;
+    border-color: var(--mint);
+    box-shadow: 0 25px 65px #0007, 0 0 20px #94e4d322;
+  }
+
+  /* Contact Card 3D Depth */
+  .contact-card {
+    transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transition: transform 0.25s var(--ease), border-color 0.25s, box-shadow 0.25s;
+  }
+  .contact-card:hover {
+    box-shadow: 0 30px 85px #0008, 0 0 30px #2abaaa33;
+    border-color: var(--mint);
+  }
+}
+
+/* Timeline 3D Glowing Energy Pulse */
+.timeline::after {
+  box-shadow: 0 0 12px var(--mint), 0 0 24px var(--teal);
+  transition: height 0.15s ease-out;
+}
+.timeline-item::before {
+  box-shadow: 0 0 10px var(--mint);
+  transition: transform 0.3s var(--ease), background 0.3s;
+}
+.timeline-item:hover::before {
+  transform: scale(1.4);
+  background: var(--mint);
+}
+
+/* Reduced Motion Safety */
+@media(prefers-reduced-motion: reduce) {
+  .webgl-canvas-container {
+    opacity: 0.35;
+  }
+  .portrait-gimbal {
+    animation: none !important;
+  }
+  .hero-badge {
+    animation: none !important;
+    transform: none !important;
+  }
+  .portrait-depth-halo {
+    animation: none !important;
+  }
+  .project-card,
+  .skill-card,
+  .media-card,
+  .certificate-card,
+  .timeline-card,
+  .contact-card,
+  .lens-card {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Responsive Mobile Adjustments */
+@media(max-width: 720px) {
+  .hero-badge {
+    display: none;
+  }
+  .portrait-gimbal {
+    display: none;
+  }
+  .portrait-depth-halo {
+    display: none;
+  }
+  .webgl-canvas-container {
+    opacity: 0.7;
+  }
+}
+
